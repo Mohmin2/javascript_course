@@ -13,18 +13,13 @@
 // delayed_departure
 
 
-function lowerCaseStr(str){
-    let lowerCase = ""
-    for(let s of str)
-        lowerCase += s.toLowerCase()
-    return lowerCase
-}
+
 function camelCase(data){
 
     let [str1,str2]= data.trim().split("_")
 
-    str1 = lowerCaseStr(str1)
-    str2 = str2[0].toUpperCase() + lowerCaseStr(str2.slice(1))
+    str1 = str1.toLowerCase()
+    str2 = str2[0].toUpperCase() + str2.slice(1).toLowerCase()
 
     const camelStr = str1 + str2 
     return camelStr 
