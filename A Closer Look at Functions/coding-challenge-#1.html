@@ -1,0 +1,55 @@
+<html>
+<title>
+
+    <head></head>
+    <style>
+        #poll {
+            color: aquamarine;
+        }
+    </style>
+</title>
+
+<body>
+
+    <button id="poll">Answere Poll</button>
+
+    <script>
+        let Data1 = [5, 2, 3],
+            Data2 = [1, 5, 3, 9, 6, 1]
+
+        const poll = {
+            question: "What is your favourite programming language?",
+            options: ["0: JavaScript", "1: Python", "2: Rust", "3: C++"],
+            // This generates [0, 0, 0, 0]. More in the next section!
+            answers: new Array(4).fill(0),
+
+            registerNewAnswer() {
+
+                let message = this.question
+
+                for (let option of this.options) {
+                    message += `\n${option}`
+                }
+
+                let index = Number(prompt(message))
+                if (index !== NaN && index >= 0 && index < this.options.length)
+                    this.answers[index]++
+
+                this.displayResults()
+            },
+
+
+            displayResults(type = 'array') {
+                if (type === "array")
+                    console.log(this.answers)
+                else
+                    console.log(`Poll results are ${this.answers}`)
+
+            }
+        }
+        document.getElementById('poll').addEventListener('click', poll.registerNewAnswer.bind(poll))
+        poll.displayResults.call({answers:Data1})
+    </script>
+</body>
+
+</html>
