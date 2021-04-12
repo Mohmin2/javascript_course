@@ -2,18 +2,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     GlobalData()
     const countries = {type:"country"},abbrevations = {type:"ab"},continents = {type:"continent"}
+
+    // storing it in objects to minimize pi calls
     data(countries,abbrevations,continents)
-    
-    
-    
-    // document.getElementsByTagName('button')[0].addEventListener('click', function () {
-
-    //     const data = checkData()
-
-    //     if (data) {
-    //         particularData(data[0], data[1])
-    //     }
-    // })
 
     document.getElementsByTagName('input')[0].addEventListener('input',function(e){
 
@@ -51,7 +42,7 @@ async function GlobalData() {
     }
 }
 
-// made this function to minimize api calls
+// made this function to minimie api calls
 async function data(countries,abbrevations,continents) {
 
     try {
@@ -86,6 +77,8 @@ async function data(countries,abbrevations,continents) {
 }
 
 
+// adds data to html
+
 function showData(type,place,active,confirmed,recovered) {
 
     const list = document.getElementsByClassName("list-group")[0]
@@ -100,6 +93,8 @@ function showData(type,place,active,confirmed,recovered) {
     input.nextElementSibling.style.display = "none"
 }
 
+
+// calling the payload here
 async function addData(matches,type) {
     const list = document.getElementsByClassName("list-group")[0]
     
