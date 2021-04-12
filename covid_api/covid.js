@@ -10,13 +10,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             let str = this.value.toLowerCase(),prev_str = null
-            
             let final_time = new Date().getTime()
-            console.log(final_time - start_time)
+            
             if(str.match(/^[A-Za-z0-9]+$/) && (str !== prev_str) && ((final_time - start_time) > 1300)){
-                console.log(str,final_time - start_time)
-
-                // setTimeout(matching_results.bind({countries,abbrevations,continents,str}),1500)
                 matching_results.call({countries,abbrevations,continents,str})
                 prev_str = str
                 start_time = final_time
