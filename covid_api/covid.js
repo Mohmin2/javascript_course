@@ -5,16 +5,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // storing it in objects to minimize pi calls
     data(countries,abbrevations,continents)
-
+    let start_time = new Date().getTime()
     document.getElementsByTagName('input')[0].addEventListener('input',function(e){
 
 
-            let str = this.value.toLowerCase(),prev_str = null 
-            if(str.match(/^[A-Za-z0-9]+$/) && (str !== prev_str)){
-                console.log(str)
+            let str = this.value.toLowerCase(),prev_str = null
+            
+            let final_time = new Date().getTime()
+            console.log(final_time - start_time)
+            if(str.match(/^[A-Za-z0-9]+$/) && (str !== prev_str) && ((final_time - start_time) > 1300)){
+                console.log(str,final_time - start_time)
 
-                setTimeout(matching_results.bind({countries,abbrevations,continents,str}),1500)
+                // setTimeout(matching_results.bind({countries,abbrevations,continents,str}),1500)
+                matching_results.call({countries,abbrevations,continents,str})
                 prev_str = str
+                start_time = final_time
             }
 
     })
@@ -94,6 +99,12 @@ function showData(type,place,active,confirmed,recovered) {
 }
 
 
+// ("what is your") => ("What Is Your")
+function first_word_Capital(word){
+
+    return word.split(" ").map(wr => (wr[0].toUpperCase() + wr.slice(1))).join(" ")
+    
+}
 // calling the payload here
 async function addData(matches,type) {
     const list = document.getElementsByClassName("list-group")[0]
@@ -113,7 +124,7 @@ async function addData(matches,type) {
         let place = matches[0]
 
         // other wise gives wrong results
-        place = place[0].toUpperCase() + place.slice(1)
+        place = first_word_Capital(place)
         const data = await fetch(`https://covid-api.mmediagroup.fr/v1/cases?${type}=${place}`)
         const response = await data.json()
 
@@ -132,7 +143,7 @@ async function addData(matches,type) {
     else{
         for(let place of matches){
             // other wise gives wrong results
-            place = place[0].toUpperCase() + place.slice(1)
+            place = first_word_Capital(place)
             const data = await fetch(`https://covid-api.mmediagroup.fr/v1/cases?${type}=${place}`)
             const response = await data.json()
             console.log(place,type,response['All'])
