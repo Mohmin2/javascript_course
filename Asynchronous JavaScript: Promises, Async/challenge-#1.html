@@ -1,0 +1,44 @@
+<html>
+<title>
+
+    <head></head>
+    <style>
+        #poll {
+            color: aquamarine;
+        }
+    </style>
+</title>
+
+<body>
+
+    <button id="poll">Answere Poll</button>
+
+    <script>
+        function whereAmI(latd = 52.508, long = 13.381) {
+
+            console.log(latd, long)
+            fetch(`https://geocode.xyz/${latd},${long}?geoit=json`)
+                .then(response => {
+
+                    if (!response.ok)
+                        throw new Error(`u are clicking on the butoon too fast ${response.status}`)
+                    return response.json()
+                })
+                .then(data => {
+
+                    if(data?.error)
+                        throw new Error(`something wrong with your coordinates`)
+                    console.log(` U are in ${data['city']},${data['country']}`)
+                })
+                .catch(err => console.log(err))
+        }
+
+
+        whereAmI(52.508, 13.381)
+        whereAmI(52444444444.508, 13.381)
+        // whereAmI(19.037, 72.873);
+        whereAmI(-33.933, 18.474);
+    </script>
+</body>
+
+</html>
