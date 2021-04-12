@@ -42,7 +42,7 @@ async function GlobalData() {
     }
 }
 
-// made this function to minimie api calls
+// made this function to minimize api calls
 async function data(countries,abbrevations,continents) {
 
     try {
@@ -111,6 +111,7 @@ async function addData(matches,type) {
     if (type === "continent"){
         console.log("continent",matches)
         let place = matches[0]
+
         // other wise gives wrong results
         place = place[0].toUpperCase() + place.slice(1)
         const data = await fetch(`https://covid-api.mmediagroup.fr/v1/cases?${type}=${place}`)
