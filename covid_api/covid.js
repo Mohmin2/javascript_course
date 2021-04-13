@@ -125,7 +125,7 @@ function showData(type, place, active, confirmed, recovered) {
 async function addData(matches, type) {
     const list = document.getElementsByClassName("list-group")[0]
     // did it bcz otherwize it would send too many requests simoultaneoulsy
-    matches = matches.slice(0,10)
+    matches = matches.slice(0, 10)
     // clear previious search results
     if (list.childElementCount > 0) {
         console.log(list.children[0])
@@ -160,13 +160,13 @@ async function addData(matches, type) {
         showData(type, place, active, confirmed, recovered)
     } else {
         let urls = []
-        for (let place of matches){
-            const data =  fetch(`https://covid-api.mmediagroup.fr/v1/cases?${type}=${place}`)
+        for (let place of matches) {
+            const data = fetch(`https://covid-api.mmediagroup.fr/v1/cases?${type}=${place}`)
             urls.push(data)
         }
-        const data = await Promise.all(urls).then(responses => Promise.all(responses.map(r=>r.json())))
-        
-        for( let d of data){
+        const data = await Promise.all(urls).then(responses => Promise.all(responses.map(r => r.json())))
+
+        for (let d of data) {
             const confirmed = d["All"]["confirmed"]
             const deaths = d["All"]["deaths"]
             const recovered = d["All"]["recovered"]
@@ -174,6 +174,10 @@ async function addData(matches, type) {
             const active = confirmed - (deaths + recovered)
             showData(type, d["All"]["country"], active, confirmed, recovered)
         }
+
+
+
+        // removed it because it would still get stuck on pending promises
         // console.log(data)
         // console.log(data.map(i => (console.log(i))))
         // .then(response => {
