@@ -18,6 +18,9 @@
 
 <body>
 
+    <div class="images">
+
+    </div>
 
     <script>
         function createImage(imgPath) {
@@ -26,7 +29,7 @@
                 img.src = imgPath
                 img.classList = "images"
                 img.addEventListener('load', function () {
-                    document.getElementsByTagName('body')[0].appendChild(img)
+                    document.getElementsByClassName('images')[0].append(img)
                     resolve(img)
                 })
 
@@ -43,20 +46,37 @@
             })
         }
 
-        let srcs = ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']
-        let img = null
-        for (src of srcs) {
-            console.log("oo")
-            createImage(src)
-                .then(i => {
-                    img = i
-                    return wait(2)
-                }).then(()=>{
-                    img.style.display = "none"
-                }
-                )
-                .catch(err => console.log('error'))
-        }
+
+        // could;t figure out why it wont in loop
+        // let srcs = ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']
+        // let img = null
+        // for (src of srcs) {
+
+        //     createImage(src)
+        //         .then(i => {
+        //             img = i
+        //             return wait(2)
+        //         }).then(() => {
+        //             console.log(img)
+        //             img.style.display = "none"
+        //         })
+        //         .catch(err => console.log('error'))
+        // }
+
+        createImage("img/img-1.jpg")
+            .then(i => {
+                img = i
+                return wait(2)
+            }).then(() => {
+                img.style.display = "none"
+                return createImage("img/img-2.jpg")
+            }).then(i => {
+                img = i
+                return wait(2)
+            }).then(() => {
+                img.style.display = "none"
+            })
+            .catch(err => console.log('error'))
     </script>
 </body>
 
