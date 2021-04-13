@@ -164,8 +164,8 @@ async function addData(matches, type) {
             const data = fetch(`https://covid-api.mmediagroup.fr/v1/cases?${type}=${place}`)
             urls.push(data)
         }
-        const data = await Promise.all(urls).then(responses => Promise.all(responses.map(r => r.json())))
-
+        const data = await Promise.all(urls).then( responses =>  Promise.all(responses.map(r => r.json())))
+        console.log(data)
         for (let d of data) {
             const confirmed = d["All"]["confirmed"]
             const deaths = d["All"]["deaths"]

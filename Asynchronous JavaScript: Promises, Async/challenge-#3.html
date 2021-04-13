@@ -17,7 +17,7 @@
     </div>
 
     <script>
-        function createImage(imgPath) {
+        function loadNpause(imgPath) {
             return new Promise(function (resolve, reject) {
                 const img = document.createElement('img')
                 img.src = imgPath
@@ -39,37 +39,31 @@
                 setInterval(resolve, 1000 * sec)
             })
         }
-
-
-        // could;t figure out why it wont in loop
         let img = null
-        // for (src of srcs) {
 
-        //     createImage(src)
-        //         .then(i => {
-        //             img = i
-        //             return wait(2)
-        //         }).then(() => {
-        //             console.log(img)
-        //             img.style.display = "none"
-        //         })
-        //         .catch(err => console.log('error'))
-        // }
 
-        createImage("img/img-1.jpg")
-            .then(i => {
-                img = i
-                return wait(2)
-            }).then(() => {
+        const load = async () => {
+            try {
+                img = await loadNpause('img/img-1.jpg')
+                let i = await wait(2)
                 img.style.display = "none"
-                return createImage("img/img-2.jpg")
-            }).then(i => {
-                img = i
-                return wait(2)
-            }).then(() => {
+                img = await loadNpause('img/img-2.jpg')
+                i = await wait(2)
                 img.style.display = "none"
-            })
-            .catch(err => console.log('error'))
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        // load()
+         let srcs = ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']
+         const loadAll = async function(srcs){
+         let imgs =  srcs.map(async src => await loadNpause(src))
+         console.log(imgs) //will b promise bcz in map we actually return await which is actulaay a promise so it need to get resolved
+         imgs = await Promise.all(imgs)
+         console.log(imgs)
+         }
+         loadAll(srcs)
     </script>
 </body>
 
