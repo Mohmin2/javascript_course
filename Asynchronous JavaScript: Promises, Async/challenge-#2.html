@@ -1,0 +1,63 @@
+<html>
+
+<head>
+
+
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+
+    <style>
+        #poll {
+            color: aquamarine;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <script>
+        function createImage(imgPath) {
+            return new Promise(function (resolve, reject) {
+                const img = document.createElement('img')
+                img.src = imgPath
+                img.classList = "images"
+                img.addEventListener('load', function () {
+                    document.getElementsByTagName('body')[0].appendChild(img)
+                    resolve(img)
+                })
+
+                img.addEventListener('error', function () {
+                    reject("image didn't load")
+                })
+
+            })
+        }
+
+        function wait(sec) {
+            return new Promise(function (resolve) {
+                setInterval(resolve, 1000 * sec)
+            })
+        }
+
+        let srcs = ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']
+        let img = null
+        for (src of srcs) {
+            console.log("oo")
+            createImage(src)
+                .then(i => {
+                    img = i
+                    return wait(2)
+                }).then(()=>{
+                    img.style.display = "none"
+                }
+                )
+                .catch(err => console.log('error'))
+        }
+    </script>
+</body>
+
+</html>
